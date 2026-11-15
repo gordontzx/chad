@@ -43,6 +43,10 @@ public class Chad {
             return cmd.execute(tasks, storage);
         } catch (ChadException e) {
             return e.getMessage();
+        } catch (RuntimeException e) {
+            // A bug, not bad input: still reply instead of leaving the user with no response
+            e.printStackTrace();
+            return "Sorry, something went wrong while running that command (" + e + ").";
         }
     }
 

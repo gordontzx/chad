@@ -24,23 +24,21 @@ public class AddEventCommand extends AddCommand {
 
     @Override
     public String execute(TaskList tasks, Storage storage) {
+        // Only look for /to after /from, so "/to ... /from ..." is rejected instead of crashing
         int fromIndex = args.indexOf(FROM_FLAG);
-        int toIndex = args.indexOf(TO_FLAG);
+        int toIndex = fromIndex == -1 ? -1 : args.indexOf(TO_FLAG, fromIndex + FROM_FLAG.length());
+        if (toIndex == -1) {
+            throw new InvalidArgumentException("Error! Usage: " + FORMAT);
+        }
 
-        // Check valid
-        boolean hasFlags = fromIndex != -1 && toIndex != -1;
-        boolean hasTaskDesc = fromIndex != 0;
-        boolean hasFromArg = hasFlags && (fromIndex != toIndex - FROM_FLAG.length());
-        boolean hasToArg = hasFlags && (toIndex != args.length() - TO_FLAG.length());
-
-        if (!hasFlags || !hasTaskDesc || !hasFromArg || !hasToArg) {
+        String taskName = args.substring(0, fromIndex).strip();
+        String start = args.substring(fromIndex + FROM_FLAG.length(), toIndex).strip();
+        String end = args.substring(toIndex + TO_FLAG.length()).strip();
+        if (taskName.isEmpty() || start.isEmpty() || end.isEmpty()) {
             throw new InvalidArgumentException("Error! Usage: " + FORMAT);
         }
 
         // Create task
-        String taskName = args.substring(0, fromIndex);
-        String start = args.substring(fromIndex + FROM_FLAG.length(), toIndex);
-        String end = args.substring(toIndex + TO_FLAG.length());
         String res = tasks.add(new EventTask(taskName, start, end));
         storage.write(tasks.toCsvString());
         return res;
