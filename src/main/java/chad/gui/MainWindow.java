@@ -58,6 +58,10 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
+        if (input.isBlank()) {
+            userInput.clear();
+            return; // nothing typed, so don't send an empty message
+        }
         Command cmd = Parser.parse(input);
         String response = chad.getResponse(cmd);
         dialogContainer.getChildren().addAll(

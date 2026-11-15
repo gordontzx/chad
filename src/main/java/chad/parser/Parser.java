@@ -61,15 +61,10 @@ public class Parser {
      * @return array containing the parts.
      */
     private static String[] splitInput(String input) {
-        int firstSpace = input.indexOf(" ");
-
-        boolean hasSpace = firstSpace != -1;
-        boolean hasTrailingCharsAfterFirstSpace = firstSpace + 1 < input.length();
-
-        String cmd = hasSpace ? input.substring(0, firstSpace) : input;
-        String args = hasSpace && hasTrailingCharsAfterFirstSpace
-                      ? input.substring(firstSpace + 1)
-                      : "";
+        // Ignore surrounding whitespace and any run of whitespace between the command and its arguments
+        String[] parts = input.strip().split("\\s+", 2);
+        String cmd = parts[0];
+        String args = parts.length > 1 ? parts[1] : "";
 
         assert !cmd.contains(" ") : "Command keyword contains no spaces.";
         assert cmd.length() + args.length() <= input.length() : "Length of cmd and args do not exceed length of input.";
