@@ -40,7 +40,7 @@ public class MainWindow extends AnchorPane {
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         dialogContainer.getChildren().add(
-                DialogBox.getDudeDialog(Chad.getHelloMessage(), chadImage)
+                DialogBox.getChadDialog(Chad.getHelloMessage(), chadImage)
         );
     }
 
@@ -48,7 +48,7 @@ public class MainWindow extends AnchorPane {
     public void setChad(Chad s) {
         chad = s;
         chad.getLoadWarning().ifPresent(warning ->
-                dialogContainer.getChildren().add(DialogBox.getDudeDialog(warning, chadImage)));
+                dialogContainer.getChildren().add(DialogBox.getChadDialog(warning, chadImage)));
     }
 
     /**
@@ -66,7 +66,7 @@ public class MainWindow extends AnchorPane {
         String response = chad.getResponse(cmd);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDudeDialog(response, chadImage)
+                DialogBox.getChadDialog(response, chadImage)
         );
         userInput.clear();
 
