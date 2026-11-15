@@ -1,15 +1,15 @@
-# **Shef** User Guide
+# **Chad** User Guide
 
 ![ui](Ui.png)
 
-# Shef is a chatbot that manages your tasks.
+# Chad is a chatbot that manages your tasks.
 
 # Getting started
 1. Ensure you have java 17 installed on your computer.
 2. Download the latest jar from [<ins>here</ins>](https://github.com/gordontzx/ip/releases).
 3. Copy the file to the folder you want to use as the home folder.
 4. Open a command terminal and, `cd` into the folder containing the jar file you just downloaded, and run the following
-command: `java -jar shef.jar` to start the application.
+command: `java -jar chad.jar` to start the application.
 
 # Features
 

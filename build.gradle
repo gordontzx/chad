@@ -48,12 +48,12 @@ test {
 }
 
 application {
-    mainClass.set("shef.gui.Launcher")
+    mainClass.set("chad.gui.Launcher")
 }
 
 shadowJar {
-    archiveBaseName = "shef"
-    archiveFileName = 'shef.jar'
+    archiveBaseName = "chad"
+    archiveFileName = 'chad.jar'
     archiveClassifier = null
 }
 
