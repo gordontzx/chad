@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import chad.exception.InvalidArgumentException;
 import chad.storage.Storage;
 import chad.task.Task;
 import chad.tasklist.TaskList;
@@ -24,7 +25,14 @@ public class FindCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Storage storage) {
-        List<Task> matches = args.isEmpty() ? List.of() : tasks.getMatches(args);
+        if (args.isEmpty()) {
+            throw new InvalidArgumentException("Error! Usage: " + FORMAT);
+        }
+
+        List<Task> matches = tasks.getMatches(args);
+        if (matches.isEmpty()) {
+            return "No tasks in your list match \"" + args + "\".";
+        }
 
         String body = IntStream.range(0, matches.size())
                 .mapToObj(i -> String.format("\n%d.%s", i + 1, matches.get(i).toString()))

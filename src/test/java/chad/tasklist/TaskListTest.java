@@ -91,9 +91,10 @@ public class TaskListTest {
         assertEquals(2, hits1.size());
         assertTrue(hits1.stream().allMatch(t -> t.getDescription().contains("book")));
 
-        List<Task> hits2 = tl.getMatches("Read"); // matches 'Read notes' only (case-sensitive)
-        assertEquals(1, hits2.size());
-        assertTrue(hits2.get(0).getDescription().contains("Read"));
+        List<Task> hits2 = tl.getMatches("READ"); // matches 'read book' and 'Read notes' (case-insensitive)
+        assertEquals(2, hits2.size());
+        assertEquals("read book", hits2.get(0).getDescription());
+        assertEquals("Read notes", hits2.get(1).getDescription());
 
         List<Task> hits3 = tl.getMatches("missing");
         assertTrue(hits3.isEmpty());

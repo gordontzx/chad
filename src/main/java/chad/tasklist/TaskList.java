@@ -2,6 +2,7 @@ package chad.tasklist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -76,13 +77,14 @@ public class TaskList {
     }
 
     /**
-     * Gets a list of tasks whose description contains keyword.
+     * Gets a list of tasks whose description contains keyword, ignoring case.
      * @param keyword String to match task descriptions.
      * @return List of tasks.
      */
     public List<Task> getMatches(String keyword) {
+        String needle = keyword.toLowerCase(Locale.ROOT);
         return tasks.stream()
-                .filter(t -> t.getDescription().contains(keyword))
+                .filter(t -> t.getDescription().toLowerCase(Locale.ROOT).contains(needle))
                 .toList();
     }
 
