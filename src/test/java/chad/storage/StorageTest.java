@@ -56,6 +56,26 @@ public class StorageTest {
     }
 
     @Test
+    public void bareFilename_noFolder_savesAndLoadsInCurrentFolder() throws IOException {
+        // A bare filename has no parent folder, so it must be created in the current folder
+        String name = "storage-test-" + System.nanoTime() + ".csv";
+        Path inCurrentFolder = Path.of(name).toAbsolutePath();
+        try {
+            Storage storage = new Storage(name);
+            assertTrue(Files.exists(inCurrentFolder));
+
+            storage.write("T,0,bare\n");
+            assertEquals("1.[T][ ] bare", load(new Storage(name)).toString());
+        } finally {
+            try (Stream<Path> leftovers = Files.list(inCurrentFolder.getParent())) {
+                for (Path p : leftovers.filter(p -> p.getFileName().toString().startsWith(name)).toList()) {
+                    Files.deleteIfExists(p);
+                }
+            }
+        }
+    }
+
+    @Test
     public void read_oldFormatFile_loadsWithoutWarning() throws IOException {
         Files.createDirectories(saveFile().getParent());
         Files.writeString(saveFile(), "T,1,go home\n"

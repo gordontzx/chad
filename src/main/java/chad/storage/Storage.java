@@ -55,9 +55,10 @@ public class Storage {
     public Storage(String filePath) {
         this.file = new File(filePath);
 
-        // Create file if it does not exist
+        // Create file if it does not exist. Use the absolute path so a bare filename
+        // (no folder) still has a parent, namely the current folder.
         try {
-            file.getParentFile().mkdirs();
+            file.getAbsoluteFile().getParentFile().mkdirs();
             file.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
