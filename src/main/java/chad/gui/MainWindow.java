@@ -47,6 +47,8 @@ public class MainWindow extends AnchorPane {
     /** Injects the Chad instance */
     public void setChad(Chad s) {
         chad = s;
+        chad.getLoadWarning().ifPresent(warning ->
+                dialogContainer.getChildren().add(DialogBox.getDudeDialog(warning, chadImage)));
     }
 
     /**

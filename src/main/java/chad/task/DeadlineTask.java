@@ -30,7 +30,7 @@ public class DeadlineTask extends Task {
 
     @Override
     public String toCsvString() {
-        return String.format("D,%s,%s", super.toCsvString(), deadline);
+        return toCsvString("D", deadline.toString());
     }
 
     @Override

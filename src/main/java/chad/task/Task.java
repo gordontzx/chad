@@ -1,5 +1,7 @@
 package chad.task;
 
+import chad.storage.Csv;
+
 /**
  * Encapsulates all types of tasks that the program can handle.
  */
@@ -46,11 +48,24 @@ public abstract class Task {
     }
 
     /**
-     * Fetches the task represented as a string for storage in csv format.
+     * Fetches the task represented as a line for storage in csv format.
      * @return A string in csv format.
      */
-    public String toCsvString() {
-        return (isDone ? 1 : 0) + "," + description;
+    public abstract String toCsvString();
+
+    /**
+     * Builds the csv line for this task, quoting fields where needed.
+     * @param typeCode single-letter code identifying the task type.
+     * @param extraFields type-specific fields that follow the description.
+     * @return A string in csv format.
+     */
+    protected String toCsvString(String typeCode, String... extraFields) {
+        String[] fields = new String[3 + extraFields.length];
+        fields[0] = typeCode;
+        fields[1] = isDone ? "1" : "0";
+        fields[2] = description;
+        System.arraycopy(extraFields, 0, fields, 3, extraFields.length);
+        return Csv.join(fields);
     }
 
     @Override

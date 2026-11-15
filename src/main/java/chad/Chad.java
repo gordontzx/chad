@@ -1,5 +1,7 @@
 package chad;
 
+import java.util.Optional;
+
 import chad.command.Command;
 import chad.exception.ChadException;
 import chad.storage.Storage;
@@ -11,6 +13,7 @@ import chad.tasklist.TaskList;
 public class Chad {
     private final TaskList tasks;
     private final Storage storage;
+    private final Optional<String> loadWarning;
 
     /**
      * Returns a Chad object.
@@ -19,7 +22,15 @@ public class Chad {
     public Chad(String filePath) {
         this.tasks = new TaskList();
         this.storage = new Storage(filePath);
-        storage.read(tasks);
+        this.loadWarning = storage.read(tasks);
+    }
+
+    /**
+     * Gets a warning about tasks that could not be loaded from the save file.
+     * @return the warning, or empty if everything loaded.
+     */
+    public Optional<String> getLoadWarning() {
+        return loadWarning;
     }
 
     /**

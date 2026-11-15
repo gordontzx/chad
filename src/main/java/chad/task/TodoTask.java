@@ -14,7 +14,7 @@ public class TodoTask extends Task {
 
     @Override
     public String toCsvString() {
-        return "T," + super.toCsvString();
+        return toCsvString("T");
     }
 
     @Override

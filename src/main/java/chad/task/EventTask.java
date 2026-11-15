@@ -26,7 +26,7 @@ public class EventTask extends Task {
 
     @Override
     public String toCsvString() {
-        return String.format("E,%s,%s,%s", super.toCsvString(), start, end);
+        return toCsvString("E", start, end);
     }
 
     @Override
