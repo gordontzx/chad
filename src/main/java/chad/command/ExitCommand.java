@@ -7,7 +7,7 @@ import chad.tasklist.TaskList;
  * Command to exit the program.
  */
 public class ExitCommand extends Command {
-    public static final String FORMAT = "bye";
+    private static final String FORMAT = "bye";
 
     public ExitCommand() {
         super("");

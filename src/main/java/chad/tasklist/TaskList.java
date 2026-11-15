@@ -31,16 +31,25 @@ public class TaskList {
     }
 
     /**
+     * Gets the task with the given 1-based index, as shown to the user.
+     * @param idx the index of the task, starting from 1.
+     * @return the task.
+     * @throws InvalidArgumentException if there is no task with that index.
+     */
+    private Task getTask(int idx) throws InvalidArgumentException {
+        if (idx <= 0 || idx > tasks.size()) {
+            throw new InvalidArgumentException("Invalid task id!");
+        }
+        return tasks.get(idx - 1);
+    }
+
+    /**
      * Marks task with given index as done.
      * @param idx the index of the task to be marked.
      * @throws InvalidArgumentException
      */
     public String markAsDone(int idx) throws InvalidArgumentException {
-        if (idx <= 0 || idx > tasks.size()) {
-            throw new InvalidArgumentException("Invalid task id!");
-        }
-
-        Task task = tasks.get(idx - 1);
+        Task task = getTask(idx);
         task.markAsDone();
         return "Nice! I've marked this task as done:\n  " + task;
     }
@@ -51,11 +60,7 @@ public class TaskList {
      * @throws InvalidArgumentException
      */
     public String unmarkAsDone(int idx) throws InvalidArgumentException {
-        if (idx <= 0 || idx > tasks.size()) {
-            throw new InvalidArgumentException("Invalid task id!");
-        }
-
-        Task task = tasks.get(idx - 1);
+        Task task = getTask(idx);
         task.unmarkAsDone();
         return "Ok, I've marked this task as not done yet:\n  " + task;
     }
@@ -66,11 +71,7 @@ public class TaskList {
      * @throws InvalidArgumentException
      */
     public String deleteTask(int idx) throws InvalidArgumentException {
-        if (idx <= 0 || idx > tasks.size()) {
-            throw new InvalidArgumentException("Invalid task id!");
-        }
-
-        Task task = tasks.get(idx - 1);
+        Task task = getTask(idx);
         tasks.remove(idx - 1);
         return String.format("Noted. I've removed the task:\n  %s\nYou now have %d task%s in the list.",
                 task, tasks.size(), tasks.size() == 1 ? "" : "s");
