@@ -29,12 +29,12 @@ Save file format (one task per line, see Csv for quoting rules):
 types:
 T: todo task
 D: deadline task, <by> is a date in YYYY-MM-DD format
-E: event task
+E: event task, <from> and <to> are YYYY-MM-DD or YYYY-MM-DD HH:mm
 
 e.g.
 T,1,read book
 D,0,return book,2025-06-06
-E,0,project meeting,Aug 6th 2pm,4pm
+E,0,project meeting,2025-08-06 14:00,2025-08-06 16:00
 T,0,"buy eggs, milk"
 */
 

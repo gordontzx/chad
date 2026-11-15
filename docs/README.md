@@ -69,14 +69,15 @@ You now have 2 tasks in your list.
 ```
 
 ## Adding a event task: `event`
-Adds an event type task which starts and ends at specified times. <br/>
-Usage: `event TASK_NAME /from START /to END` <br/>
+Adds an event type task which starts and ends at specified dates, with optional times in 24-hour format.
+A date without a time covers the whole day. The end cannot be before the start. <br/>
+Usage: `event TASK_NAME /from YYYY-MM-DD [HH:mm] /to YYYY-MM-DD [HH:mm]` <br/>
 <br/>
-Example: `event meeting /from 2pm /to 3pm` <br/>
+Example: `event meeting /from 2025-12-31 14:00 /to 2025-12-31 15:00` <br/>
 Example output:
 ```
 Got it. I've added this task:
-  [E][ ] meeting (from: 2pm to: 3pm)
+  [E][ ] meeting (from: Dec 31 2025 14:00 to: Dec 31 2025 15:00)
 You now have 3 tasks in your list.
 ```
 

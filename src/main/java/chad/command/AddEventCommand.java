@@ -1,5 +1,7 @@
 package chad.command;
 
+import java.time.format.DateTimeParseException;
+
 import chad.exception.InvalidArgumentException;
 import chad.storage.Storage;
 import chad.task.EventTask;
@@ -9,7 +11,7 @@ import chad.tasklist.TaskList;
  * Command that adds event tasks.
  */
 public class AddEventCommand extends AddCommand {
-    private static final String FORMAT = "event TASK_NAME /from START /to END";
+    private static final String FORMAT = "event TASK_NAME /from YYYY-MM-DD [HH:mm] /to YYYY-MM-DD [HH:mm]";
 
     private static final String FROM_FLAG = " /from ";
     private static final String TO_FLAG = " /to ";
@@ -38,8 +40,14 @@ public class AddEventCommand extends AddCommand {
             throw new InvalidArgumentException("Error! Usage: " + FORMAT);
         }
 
-        // Create task
-        String res = tasks.add(new EventTask(taskName, start, end));
+        EventTask event;
+        try {
+            event = new EventTask(taskName, start, end);
+        } catch (DateTimeParseException e) {
+            throw new InvalidArgumentException("Invalid date! Usage: " + FORMAT);
+        }
+
+        String res = tasks.add(event);
         storage.write(tasks.toCsvString());
         return res;
     }

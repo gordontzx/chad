@@ -47,7 +47,7 @@ public class StorageTest {
         TaskList tasks = new TaskList();
         tasks.add(new TodoTask("buy eggs, milk"));
         tasks.add(new DeadlineTask("essay, part \"2\"", "2025-09-22"));
-        tasks.add(new EventTask("lunch, then talk", "Mon, 2pm", "3pm, maybe"));
+        tasks.add(new EventTask("lunch, then \"talk\"", "2025-12-01 12:00", "2025-12-01"));
         storage.write(tasks.toCsvString());
 
         TaskList reloaded = load(new Storage(saveFile().toString()));
@@ -58,14 +58,17 @@ public class StorageTest {
     @Test
     public void read_oldFormatFile_loadsWithoutWarning() throws IOException {
         Files.createDirectories(saveFile().getParent());
-        Files.writeString(saveFile(), "T,1,go home\nD,0,finish ip,2025-09-22\nE,0,meeting,2pm,3pm\n");
+        Files.writeString(saveFile(), "T,1,go home\n"
+                + "D,0,finish ip,2025-09-22\n"
+                + "E,0,meeting,2025-12-31 14:00,2025-12-31 15:00\n");
 
         Storage storage = new Storage(saveFile().toString());
         TaskList tasks = new TaskList();
         Optional<String> warning = storage.read(tasks);
 
         assertTrue(warning.isEmpty());
-        assertEquals("1.[T][X] go home\n2.[D][ ] finish ip (by: Sep 22 2025)\n3.[E][ ] meeting (from: 2pm to: 3pm)",
+        assertEquals("1.[T][X] go home\n2.[D][ ] finish ip (by: Sep 22 2025)\n"
+                + "3.[E][ ] meeting (from: Dec 31 2025 14:00 to: Dec 31 2025 15:00)",
                 tasks.toString());
         assertTrue(backups().isEmpty());
     }
@@ -76,7 +79,7 @@ public class StorageTest {
                 + "T,0,good one\n"
                 + "D,0,bad date,tomorrow\n"
                 + "D,0,a, b,2025-01-01\n"
-                + "E,0,missing end,2pm\n"
+                + "E,0,missing end,2025-12-31\n"
                 + "T,2,bad done flag\n"
                 + "\n"
                 + "T,1,good two\n";

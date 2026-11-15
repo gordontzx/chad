@@ -24,10 +24,10 @@ public class TaskListTest {
         assertEquals(list.add(todo),
                 "Got it. I've added this task:\n  [T][ ] test 1\nYou now have 1 task in the list.");
 
-        Task event = new EventTask("test 2", "now", "later");
+        Task event = new EventTask("test 2", "2025-12-31 14:00", "2025-12-31");
         assertEquals(list.add(event),
                 "Got it. I've added this task:\n  "
-                        + "[E][ ] test 2 (from: now to: later)\nYou now have 2 tasks in the list.");
+                        + "[E][ ] test 2 (from: Dec 31 2025 14:00 to: Dec 31 2025)\nYou now have 2 tasks in the list.");
     }
 
     @Test
