@@ -1,26 +1,48 @@
-# Duke project template
+# Chad
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+Chad is a desktop chatbot that keeps track of your todos, deadlines and events.
+You type commands into a chat window, and your tasks are saved automatically.
 
-## Setting up in Intellij
+![Chad](docs/Ui.png)
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+See the **[User Guide](docs/README.md)** for how to install Chad and use every command.
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+## Building and running
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+Prerequisites: JDK 17.
+
+| Task | Command |
+|---|---|
+| Run the app | `./gradlew run` |
+| Build the runnable jar (`build/libs/chad.jar`) | `./gradlew shadowJar` |
+| Run the tests | `./gradlew test` |
+| Run the tests and the code style checks | `./gradlew check` |
+
+On Windows, use `gradlew.bat` instead of `./gradlew`.
+
+To run the built jar: `java -jar build/libs/chad.jar`. Tasks are saved to `data/data.csv` inside the folder you run
+it from.
+
+### Setting up in IntelliJ
+
+1. Open the project folder in IntelliJ (`File` > `Open`) and accept the defaults to import it as a Gradle project.
+2. Set the project SDK to **JDK 17** and the language level to `SDK default`
+   ([how to](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk)).
+3. Run `chad.gui.Launcher` (in `src/main/java/chad/gui/Launcher.java`).
+
+## Project structure
+
+| Package | Contents |
+|---|---|
+| `chad` | `Chad`, which runs a parsed command against the task list and save file |
+| `chad.gui` | The JavaFX window (`Launcher` is the entry point) |
+| `chad.parser` | Turns what the user types into a `Command` |
+| `chad.command` | One class per command (`todo`, `deadline`, `event`, `mark`, `find`, ...) |
+| `chad.task` | Task types: `TodoTask`, `DeadlineTask`, `EventTask` |
+| `chad.tasklist` | The list of tasks |
+| `chad.storage` | Loading and saving `data/data.csv` |
+| `chad.exception` | Errors shown to the user |
+
+## Acknowledgements
+
+Built from the [SE-EDU Duke project template](https://github.com/se-edu/duke).

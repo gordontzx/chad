@@ -5,11 +5,18 @@
 # Chad is a chatbot that manages your tasks.
 
 # Getting started
-1. Ensure you have java 17 installed on your computer.
-2. Download the latest jar from [<ins>here</ins>](https://github.com/gordontzx/ip/releases).
+1. Ensure you have Java 17 installed on your computer.
+2. Download the latest jar from [<ins>here</ins>](https://github.com/gordontzx/chad/releases).
 3. Copy the file to the folder you want to use as the home folder.
-4. Open a command terminal and, `cd` into the folder containing the jar file you just downloaded, and run the following
+4. Open a command terminal, `cd` into the home folder you copied the jar file into, and run the following
 command: `java -jar chad.jar` to start the application.
+
+## Where your tasks are saved
+Your tasks are saved automatically after every change, in `data/data.csv` inside the folder you run Chad from.
+Always start Chad from the same home folder: starting it from a different folder creates a new, empty task list there,
+and your saved tasks stay in the original folder. <br/>
+If some lines of the save file can't be read (for example, after editing it by hand), Chad skips them, saves a backup
+copy of the original file next to it as `data.csv.bak-<date>-<time>`, and tells you when it starts.
 
 # Features
 
@@ -33,7 +40,7 @@ Here are the tasks in your list:
 ```
 
 ## Finding tasks by keyword: `find`
-Finds tasks by the keyword in the task description.<br/>
+Finds tasks whose description contains the keyword. Capitals are ignored, so `find BOOK` also matches `book`.<br/>
 Usage: `find KEYWORD` <br/>
 <br/>
 Example: `find book` <br/>
@@ -43,17 +50,18 @@ Here are the matching tasks in your list:
 1.[T][ ] borrow book
 2.[T][ ] return book
 ```
+If no tasks match, Chad replies `No tasks in your list match "KEYWORD".`
 
 ## Adding a todo task: `todo`
 Adds a todo type task. <br/>
-Usage: `todo` <br/>
+Usage: `todo TASK_NAME` <br/>
 <br/>
-Example: `add todo borrow book` <br/>
+Example: `todo borrow book` <br/>
 Example output:
 ```
 Got it. I've added this task:
   [T][ ] borrow book
-You now have 1 task in your list.
+You now have 1 task in the list.
 ```
 
 ## Adding a deadline task: `deadline`
@@ -65,10 +73,10 @@ Example output:
 ```
 Got it. I've added this task:
   [D][ ] shower (by: Dec 31 2025)
-You now have 2 tasks in your list.
+You now have 2 tasks in the list.
 ```
 
-## Adding a event task: `event`
+## Adding an event task: `event`
 Adds an event type task which starts and ends at specified dates, with optional times in 24-hour format.
 A date without a time covers the whole day. The end cannot be before the start. <br/>
 Usage: `event TASK_NAME /from YYYY-MM-DD [HH:mm] /to YYYY-MM-DD [HH:mm]` <br/>
@@ -78,7 +86,7 @@ Example output:
 ```
 Got it. I've added this task:
   [E][ ] meeting (from: Dec 31 2025 14:00 to: Dec 31 2025 15:00)
-You now have 3 tasks in your list.
+You now have 3 tasks in the list.
 ```
 
 ## Marking a task as done: `mark`
@@ -88,7 +96,7 @@ Usage: `mark TASK_INDEX` <br/>
 Example: `mark 1` <br/>
 Example output:
 ```
-Nice! I've marked this task ad done:
+Nice! I've marked this task as done:
   [T][X] borrow book
 ```
 
@@ -99,7 +107,7 @@ Usage: `unmark TASK_INDEX` <br/>
 Example: `unmark 1` <br/>
 Example output:
 ```
-Ok. I've marked this task as not done yet:
+Ok, I've marked this task as not done yet:
   [T][ ] borrow book
 ```
 
